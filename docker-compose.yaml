@@ -1,0 +1,75 @@
+
+version: '3'
+services:
+  postgres:
+    image: "postgres:latest"
+    container_name: postgresql
+    volumes:
+      - ./postgresql/:/var/lib/postgresql/data/
+       
+     
+
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=testdb
+    ports:
+      - "5432:5432"
+
+  flyway:
+    image: flyway/flyway
+    container_name: flyway
+    environment:
+      FLYWAY_PASSWORD: postgres
+      FLYWAY_USER: postgres
+    volumes:
+        #create flyway supported volume in the container that has our migration scripts; https://github.com/flyway/flyway-docker
+      - .\migration_scripts:/flyway/sql
+    #change back to 60
+    command: -url=jdbc:postgresql://postgres:5432/ -connectRetries=1 migrate -X
+    depends_on:
+      - postgres   
+
+  nginx:
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    depends_on:
+      - backend
+      - frontend
+    restart: always
+    
+    ports:
+      - "80:80"
+      
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile 
+    depends_on:
+      - postgres
+      - flyway
+    environment:
+      - PGUSER=postgres
+      - PGHOST=postgres
+      - PGDATABASE=testdb
+      - PGPASSWORD=postgres
+      - PGPORT=5432
+    ports:
+      - "8080:8080"
+
+  frontend:
+    build:
+      context: ./cities-app
+      dockerfile: Dockerfile 
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    
+
+

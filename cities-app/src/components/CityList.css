@@ -1,0 +1,29 @@
+.city-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-gap: 0 10px;
+    grid-auto-rows: 10px;
+    margin-left: 20px;
+    
+  }
+  
+  .city-list img {
+    width: 250px;
+    height: 300px;
+    grid-row-end: span 2;
+    grid-column-end: span 2;
+  }
+
+  .paginate-view{
+    margin-top: 0px;
+    margin-left: 20px;
+
+  }
+
+  /* .city-list img {
+    width: auto;
+    max-width: 100%;
+    object-fit:cover;
+    grid-row-end: span 2;
+  }
+   */
