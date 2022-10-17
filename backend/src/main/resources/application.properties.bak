@@ -3,20 +3,22 @@ spring.jackson.property-naming-strategy=SNAKE_CASE
 
 spring.jpa.database-platform=org.hibernate.dialect.PostgreSQLDialect
 spring.datasource.driver-class-name=org.postgresql.Driver
-spring.datasource.url=jdbc:postgresql://postgres:5433/testdb
+spring.datasource.url=jdbc:postgresql://postgres:5432/testdb
 spring.datasource.username=postgres
 spring.datasource.password=postgres
 spring.jpa.generate-ddl=false
 spring.jpa.hibernate.ddl-auto=none
 
 
-spring.flyway.url=jdbc:postgresql://postgres:5433/testdb
+spring.flyway.url=jdbc:postgresql://postgres:5432/testdb
 spring.flyway.schemas=public
 spring.flyway.user=postgres
 spring.flyway.password=postgres
 spring.flyway.baseline-version=1
 spring.flyway.locations=classpath:db/migration
 spring.flyway.enabled=true
+spring.flyway.baselineOnMigrate=true
+spring.flyway.check-location=true
 
 
 

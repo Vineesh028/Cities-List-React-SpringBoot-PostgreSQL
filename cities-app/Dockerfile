@@ -8,6 +8,8 @@ COPY package-lock.json ./
 
 COPY ./ ./
 
+RUN npm install
+
 # Add bash
 RUN apk add --no-cache bash
 RUN chmod +x ./env.sh
